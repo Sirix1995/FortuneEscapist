@@ -8,6 +8,11 @@ public class MainMenu : MonoBehaviour
     public GameObject settingsPanel;
     public GameObject mainMenuButtons;
     public GameObject mainMenuTitle;
+    public GameObject scores;
+    private Transform entryContainer;
+    private Transform entryTemplate;
+
+   private Transform ScoresPanel;
     // Start is called before the first frame update
     public void StartGame()
     {
@@ -32,5 +37,26 @@ public class MainMenu : MonoBehaviour
     {
         Debug.Log("Quitting");
         Application.Quit();
+    }
+
+    public void Scores(){
+        mainMenuButtons.SetActive(false);
+        scores.SetActive(true);
+        mainMenuTitle.SetActive(false);
+
+
+        entryContainer = scores.transform.Find("highscoreEntryContainer");
+        entryTemplate = entryContainer.Find("highscoreEntryTemplate");
+
+        entryTemplate.gameObject.SetActive(false);
+        float templateHeight = 40f;
+        for (int i = 0; i < 10; i++){
+            Transform entryTransform = Instantiate(entryTemplate, entryContainer);
+            RectTransform entryRectTransform = entryTransform.GetComponent<RectTransform>();
+            entryRectTransform.anchoredPosition = new Vector2(0, -templateHeight * i);
+            entryTransform.gameObject.SetActive(true);
+        }
+
+
     }
 }
