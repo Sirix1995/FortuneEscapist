@@ -60,9 +60,9 @@ public class MainMenu : MonoBehaviour
             int rank = i + 1;
             int score = Random.Range(0, 10000);
 
-            entryTransform.Find("posText").GetComponent<TextAlignment>().text = rank.ToString();
-            entryTransform.Find("nameText").GetComponent<TextAlignment>().text = score.ToString();
-            entryTransform.Find("posText").GetComponent<TextAlignment>().text = "AAA";
+            entryTransform.Find("posText").GetComponent<UnityEngine.UI.Text>().text = rank.ToString();
+            entryTransform.Find("scoreText").GetComponent<UnityEngine.UI.Text>().text = score.ToString();
+            entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = "AAA";
         }
 
 
