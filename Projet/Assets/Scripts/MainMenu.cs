@@ -58,13 +58,13 @@ public class MainMenu : MonoBehaviour
             entryTransform.gameObject.SetActive(true);
 
             int rank = i + 1;
-            int score = Random.Range(0, 10000);
+            int score = Random.Range(0, 1000000);
 
             entryTransform.Find("posText").GetComponent<UnityEngine.UI.Text>().text = rank.ToString();
             entryTransform.Find("scoreText").GetComponent<UnityEngine.UI.Text>().text = score.ToString();
             entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = "AAA";
         }
-
-
     }
+
+   /* private class*/
 }
