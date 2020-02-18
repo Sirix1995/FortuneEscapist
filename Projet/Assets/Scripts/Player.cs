@@ -1,27 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class Player : MovingObject {
 
-    public float speed = 5F;
+    public Animator animator;
 
-	public Rigidbody2D rigidbody;
-
-	Vector2 movement;
+    private Vector2 direction;
 
     void Start()
     {	
 
     }
 
-	void Update(){
-		movement.x = Input.GetAxisRaw("Horizontal");
-		movement.y = Input.GetAxisRaw("Vertical");
+	void Update()
+    {
+        //Récupère l'entrée utilisateur 
+        direction.x = Input.GetAxisRaw("Horizontal");
+        direction.y = Input.GetAxisRaw("Vertical");
 
+
+        //Lance l'animation adequat
+        animator.SetFloat("Horizontal",direction.x);
+        animator.SetFloat("Vertical",direction.y);
+        animator.SetFloat("speed",direction.sqrMagnitude);
+
+
+        //Execute le mouvement
+        base.move(direction.x,direction.y);
 	}
-
-    void FixedUpdate()
-    {	
-        rigidbody.MovePosition(rigidbody.position + movement * speed * Time.fixedDeltaTime);
-    }
 }
