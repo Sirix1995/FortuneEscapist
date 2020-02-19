@@ -2541,6 +2541,12 @@ MonoBehaviour:
   scores: {fileID: 991935287}
   scoresButton: {fileID: 1962337357}
   menuButton: {fileID: 169088029}
+  startGameButton1: {fileID: 229379317}
+  startGameButton2: {fileID: 1767434772}
+  settingsButton: {fileID: 821427899}
+  quitButton: {fileID: 1762071618}
+  returnButton: {fileID: 354617362}
+  buttonsSelectionList: []
 --- !u!1 &1232138992
 GameObject:
   m_ObjectHideFlags: 0

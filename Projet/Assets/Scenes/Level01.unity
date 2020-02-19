@@ -363,6 +363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb35b9b79df68c43af59d1b76d31c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonsSelectionList: []
+  resumeButton: {fileID: 644998104}
+  menuButton: {fileID: 1746760975}
+  quitButton: {fileID: 99910304}
   PauseMenuUi: {fileID: 772808662}
 --- !u!1 &227503277
 GameObject:

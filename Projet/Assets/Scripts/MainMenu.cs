@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,17 +13,61 @@ public class MainMenu : MonoBehaviour
     public GameObject scores;
     public GameObject scoresButton;
     public GameObject menuButton;
+    public GameObject startGameButton1;
+    public GameObject startGameButton2;
+    public GameObject settingsButton;
+    public GameObject quitButton;
+    public GameObject returnButton;
+    public List<GameObject> buttonsSelectionList;
     private Transform entryContainer;
     private Transform entryTemplate;
     private List<Transform> highscoreEntryTransformList;
-
+    public static int selectedNumber = 0;
+    public static string currentMenu = "mainMenu";
    private Transform ScoresPanel;
     // Start is called before the first frame update
     public void Start(){
-        
+        buttonsSelectionList.Add(startGameButton1);
+        buttonsSelectionList.Add(startGameButton2);
+        buttonsSelectionList.Add(settingsButton);
+        buttonsSelectionList.Add(quitButton);
+        buttonsSelectionList.Add(scoresButton);
+       EventSystem.current.SetSelectedGameObject(buttonsSelectionList[selectedNumber]);
     }
+
+    public void Update(){
+        if(currentMenu == "mainMenu"){
+            int oldNumber = selectedNumber;
+            if(Input.GetKeyDown ("s")){
+            selectedNumber++; 
+            }
+            if(Input.GetKeyDown ("z")){
+            selectedNumber--; 
+            }
+
+
+            if(selectedNumber > 4){
+                selectedNumber = 0;
+            }
+            if(selectedNumber < 0){
+                selectedNumber = 4;
+            }
+            Debug.Log(EventSystem.current.currentSelectedGameObject);
+            if (oldNumber != selectedNumber || !this.buttonsSelectionList.Contains(EventSystem.current.currentSelectedGameObject)){
+            EventSystem.current.SetSelectedGameObject(this.buttonsSelectionList[selectedNumber]);
+            }
+        }
+        else if (currentMenu == "settings"){
+            EventSystem.current.SetSelectedGameObject(returnButton);
+        }
+        else if (currentMenu == "scores"){
+            EventSystem.current.SetSelectedGameObject(menuButton);
+        }
+    }
+
     public void StartGame()
     {
+        EventSystem.current.SetSelectedGameObject(null);
         SceneManager.LoadScene(1);
     }
 
@@ -33,6 +78,7 @@ public class MainMenu : MonoBehaviour
         mainMenuTitle.SetActive(false);
         scoresButton.SetActive(false);
         menuButton.SetActive(false);
+        currentMenu = "settings";
     }
 
     public void CloseScores(){
@@ -40,6 +86,7 @@ public class MainMenu : MonoBehaviour
         mainMenuTitle.SetActive(true);
         scoresButton.SetActive(true);
         scores.SetActive(false);
+        currentMenu = "mainMenu";
     }
     public void CloseSettings()
     {
@@ -48,6 +95,7 @@ public class MainMenu : MonoBehaviour
         mainMenuTitle.SetActive(true);
         scoresButton.SetActive(true);
         menuButton.SetActive(false);
+        currentMenu = "mainMenu";
     }
     // Update is called once per frame
     public void ExitGame()
@@ -63,7 +111,7 @@ public class MainMenu : MonoBehaviour
         mainMenuTitle.SetActive(false);
         scoresButton.SetActive(false);
         menuButton.SetActive(true);
-        
+        currentMenu = "scores";
 
         entryContainer = scores.transform.Find("highscoreEntryContainer");
         entryTemplate = entryContainer.Find("highscoreEntryTemplate");
@@ -107,7 +155,6 @@ public class MainMenu : MonoBehaviour
             entryTransform.Find("posText").GetComponent<UnityEngine.UI.Text>().text = rank.ToString();
             entryTransform.Find("scoreText").GetComponent<UnityEngine.UI.Text>().text = score.ToString();
             entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = name;
-
             transformList.Add(entryTransform);
     }
 
