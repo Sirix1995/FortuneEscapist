@@ -7,6 +7,8 @@ public class MovingObject : MonoBehaviour
     
     public Rigidbody2D rigidbody;
 
+    public BoxCollider2D boxCollider;
+
     public float baseSpeed = 5F;
 
     private float speed;
