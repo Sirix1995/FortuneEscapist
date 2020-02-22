@@ -36,7 +36,8 @@ public class MovingObject : MonoBehaviour
     }
 
     void FixedUpdate()
-    {	
+    {	   
         rigidbody.MovePosition(rigidbody.position + movement * speed * Time.fixedDeltaTime);
     }
+
 }

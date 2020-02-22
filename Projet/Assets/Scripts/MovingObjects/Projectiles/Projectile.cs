@@ -2,35 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MovingObject
+public class Projectile : MovingObject
 {   
+
+    public int damage;
+
+    public int timeInterval;
 
     private Vector2 direction;
 
     private Vector2 unit = new Vector2(0f,1f);
 
-
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {   
         base.move(direction.x,direction.y);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
     {   
         
         if( other.tag == "Enemy"){
+            other.gameObject.GetComponent<Enemy>().life -= damage;
             Destroy(gameObject);
+        }
+
+        if( other.tag == "Player" && direction == null ){
+            other.gameObject.GetComponent<Player>().changeWeapon(gameObject);
         }
         //Ici qu'il faudra gérer les dégats
         
     }
+
 
     public void init(float xDir,float yDir)
     {   
@@ -44,5 +53,4 @@ public class Arrow : MovingObject
         direction.x = xDir - transform.position.x;
         direction.y = yDir - transform.position.y;
     }
-
 }

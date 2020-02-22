@@ -11,7 +11,12 @@ public class Player : MovingObject {
 
     private GameObject enemyLock = null;
 
-    public GameObject arrow;
+    public GameObject[] projectiles = new GameObject[2];
+    private int currentProjectile = 0;
+
+    private float time = 10f;
+
+    public int life;
 
     void Start()
     {	
@@ -37,14 +42,19 @@ public class Player : MovingObject {
             animator.SetFloat("speed",direction.sqrMagnitude);
         }
 
-        if( Input.GetKeyDown(KeyCode.Z) && enemyLock != null ) {
+        if( Input.GetKeyDown(KeyCode.Space) && enemyLock != null ) {
             attack();
+        }
+
+        if( Input.GetKeyDown(KeyCode.RightAlt) ) { // Changement d'arme
+            currentProjectile = (currentProjectile + 1) % 2;
         }
 
         //Execute le mouvement
         base.move(direction.x,direction.y);
 
         NearEnemy();
+        time += Time.deltaTime;
 
 	}
 
@@ -82,7 +92,24 @@ public class Player : MovingObject {
     private void attack()
     {   
 
-        GameObject arrowSpawn = Instantiate(arrow,new Vector3(transform.position.x,transform.position.y,2f),Quaternion.identity);
-        arrowSpawn.GetComponent<Arrow>().init(enemyLock.transform.position.x,enemyLock.transform.position.y);
+        if( time > projectiles[currentProjectile].GetComponent<Projectile>().timeInterval ){  
+            GameObject projectilSpawn = Instantiate(projectiles[currentProjectile],new Vector3(transform.position.x,transform.position.y,2f),Quaternion.identity);
+            projectilSpawn.GetComponent<Projectile>().init(enemyLock.transform.position.x,enemyLock.transform.position.y);
+            time = 0f;
+        }
+    }
+
+    public void changeWeapon(GameObject object){
+        float changed = false;
+        for( int i = 0; i < projectiles.lenght; i++ ){
+            if( projectiles[i] == null ){
+                projectiles[i] = object;
+                changed = true;
+            }
+        }
+
+        if ( !changed ){
+            projectiles[currentProjectile] = object;
+        }
     }
 }
